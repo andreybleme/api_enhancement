@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: AWS Elasticache Redis cluster for caching Employees API data
+
+Resources:
+  EnergicosVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties: 
+      CidrBlock: 172.31.0.0/16
+      EnableDnsHostnames: false
+      EnableDnsSupport: false
+      InstanceTenancy: default
+  ElasticacheSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Open redis for access
+      GroupName: energicos
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '6379'
+        ToPort: '6379'
+        CidrIp: '0.0.0.0/0'
+      VpcId: !Ref 'EnergicosVPC'
+  Subnet:
+    Type: AWS::EC2::Subnet
+    Properties: 
+      CidrBlock: 172.31.0.0/16
+      VpcId: !Ref 'EnergicosVPC'
+  SubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties: 
+      CacheSubnetGroupName: energicos
+      Description: SubnetGroup for redis
+      SubnetIds: [!Ref 'Subnet']
+  CacheCluster:
+    Type: 'AWS::ElastiCache::CacheCluster'
+    DependsOn: SubnetGroup
+    Properties:
+      VpcSecurityGroupIds: [!Ref 'ElasticacheSecurityGroup']
+      CacheSubnetGroupName: energicos
+      ClusterName: 'employees-elasticache'
+      CacheNodeType: cache.t2.micro
+      Engine: redis
+      NumCacheNodes: '1'
+  
+      
