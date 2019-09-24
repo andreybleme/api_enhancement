@@ -290,3 +290,14 @@ Resources:
                 description: Media type of request
         ### end API swagger ###
       FailOnWarnings: true
+  DeploymentApiGatewayRestApi:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      Description: Deployment of Apigateway
+      RestApiId: !Ref ApiGatewayRestApi
+      StageDescription:
+        CacheClusterEnabled: true
+        CacheClusterSize: 0.5
+        CachingEnabled: true
+        CacheTtlInSeconds: 20
+      StageName: dev
