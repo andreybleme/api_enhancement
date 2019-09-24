@@ -1,0 +1,126 @@
+{
+	"info": {
+		"name": "employees-api",
+		"_postman_id": "5abca1f3-5444-b596-8012-e2bdd267b727",
+		"description": "Energicos employee REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/employees",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"employees"
+					]
+				},
+				"description": "Get all employees"
+			},
+			"response": []
+		},
+		{
+			"name": "employees",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Lucas\",\n\t\"department\": \"technology\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/employees",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"employees"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "employees",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Wharley edited\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/employees/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"employees",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "employees",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/employees/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"employees",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9778cd83-f510-4ac1-860e-12ba36781746",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "273b5058-ed2d-4dbe-818f-9e1a1599028c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
