@@ -33,12 +33,12 @@
 					"awsv4": [
 						{
 							"key": "secretKey",
-							"value": "ClvxZcdtnpL8Ef+GlQP5YH79RRyA++plQrhWv+Hp",
+							"value": "",
 							"type": "string"
 						},
 						{
 							"key": "accessKey",
-							"value": "AKIAJY6FOTDNYVIBG3QQ",
+							"value": "",
 							"type": "string"
 						}
 					]
