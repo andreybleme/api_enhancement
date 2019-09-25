@@ -26,6 +26,46 @@
 			"response": []
 		},
 		{
+			"name": "employees/clear-cache",
+			"request": {
+				"auth": {
+					"type": "awsv4",
+					"awsv4": [
+						{
+							"key": "secretKey",
+							"value": "ClvxZcdtnpL8Ef+GlQP5YH79RRyA++plQrhWv+Hp",
+							"type": "string"
+						},
+						{
+							"key": "accessKey",
+							"value": "AKIAJY6FOTDNYVIBG3QQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cache-Control",
+						"value": "max-age=0"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/employees/clear-cache",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"employees",
+						"clear-cache"
+					]
+				},
+				"description": "Get all employees"
+			},
+			"response": []
+		},
+		{
 			"name": "employees",
 			"request": {
 				"method": "POST",

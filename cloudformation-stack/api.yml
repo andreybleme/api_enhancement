@@ -3,7 +3,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: AWS API Gateway for Employees API
 
 Resources:
-
+  # API Gateway Deployment
   ApiGatewayRestApi:
     Type: AWS::ApiGateway::RestApi
     Properties:
@@ -18,6 +18,33 @@ Resources:
         schemes:
           - https
         paths:
+          /employees/clear-cache:
+            post:
+              tags:
+                - employees
+              operationId: ClearCache
+              summary: Invalidate cached data
+              consumes:
+                - application/json
+              produces:
+                - application/json
+              responses:
+                '200':
+                  description: Successful operation
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: string
+                      description: URI that may access the resource
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: 200
+                    responseTemplates:
+                      application/json: '{"message": "Cache successfully invalidated"}'
+                passthroughBehavior: when_no_match
+                requestTemplates:
+                  application/json: '{"statusCode": 200}'
+                type: mock
           /employees:
             get:
               tags:
@@ -290,6 +317,7 @@ Resources:
                 description: Media type of request
         ### end API swagger ###
       FailOnWarnings: true
+  # API Gateway Deployment
   DeploymentApiGatewayRestApi:
     Type: AWS::ApiGateway::Deployment
     Properties:
@@ -299,5 +327,27 @@ Resources:
         CacheClusterEnabled: true
         CacheClusterSize: 0.5
         CachingEnabled: true
-        CacheTtlInSeconds: 20
+        CacheTtlInSeconds: 300
+        MetricsEnabled: true
       StageName: dev
+  # IAM Policy Group
+  IAMClearCachePolicyGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: api-gateway-employees-api
+      Policies:
+        - PolicyDocument: {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "execute-api:InvalidateCache"
+                ],
+                "Resource": [
+                  "arn:aws:execute-api:us-east-1:account-id:*/dev/POST/employees/clear-cache"
+                ]
+              }
+            ]
+          }
+          PolicyName: apigateway-clear-cache

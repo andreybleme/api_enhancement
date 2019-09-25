@@ -5,6 +5,33 @@ info:
 schemes:
   - https
 paths:
+  /employees/clear-cache:
+    post:
+      tags:
+        - employees
+      operationId: ClearCache
+      summary: Invalidate cached data
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+              description: URI that may access the resource
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: 200
+            responseTemplates:
+              application/json: '{"message": "Cache successfully invalidated"}'
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
   /employees:
     get:
       tags:
