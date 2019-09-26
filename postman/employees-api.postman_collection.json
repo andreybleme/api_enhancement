@@ -13,12 +13,24 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{host}}/employees",
+					"raw": "{{host}}/employees?page=1&limit=10",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"employees"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "limit",
+							"value": "10",
+							"equals": true
+						}
 					]
 				},
 				"description": "Get all employees"
@@ -29,25 +41,14 @@
 			"name": "employees/clear-cache",
 			"request": {
 				"auth": {
-					"type": "awsv4",
-					"awsv4": [
-						{
-							"key": "secretKey",
-							"value": "ClvxZcdtnpL8Ef+GlQP5YH79RRyA++plQrhWv+Hp",
-							"type": "string"
-						},
-						{
-							"key": "accessKey",
-							"value": "AKIAJY6FOTDNYVIBG3QQ",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [
 					{
 						"key": "Cache-Control",
-						"value": "max-age=0"
+						"value": "max-age=0",
+						"disabled": true
 					}
 				],
 				"body": {},
