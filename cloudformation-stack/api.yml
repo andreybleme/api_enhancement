@@ -41,7 +41,10 @@ Resources:
                     statusCode: 200
                     responseTemplates:
                       application/json: '{"message": "Cache successfully invalidated"}'
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Origin: '''*'''
                 passthroughBehavior: when_no_match
+                httpMethod: POST
                 requestTemplates:
                   application/json: '{"statusCode": 200}'
                 type: mock
@@ -53,16 +56,16 @@ Resources:
               produces:
                 - application/json
               parameters:
-                - name: department
-                  in: query
-                  description: The department of employee to retrieve
-                  required: false
-                  type: string
                 - name: page
                   in: query
                   description: Page number of results to return.
                   required: false
-                  type: string
+                  type: integer
+                - name: limit
+                  in: query
+                  description: Number of records to be returned in a single page.
+                  required: false
+                  type: integer
               responses:
                 '200':
                   description: Successful operation
@@ -77,10 +80,105 @@ Resources:
                   default:
                     statusCode: 200
                     responseTemplates:
-                      application/json: '[{"id": 1, "name": "Wharley", "department":"technology"}, {"id": 2, "name": "Juan", "department":"technology"}, {"id": 3, "name": "Peter", "department":"sales"}]'
+                      application/json: >-
+                        #if($input.params('page') == 1 and $input.params('limit') == 10)
+                        {
+                          "results": 
+                          [
+                            {"id": 1, "name": "Wharley", "department":"technology"},
+                            {"id": 2, "name": "Juan", "department":"technology"},
+                            {"id": 3, "name": "Peter", "department":"sales"},
+                            {"id": 4, "name": "Rose", "department":"sales"},
+                            {"id": 5, "name": "Leo", "department":"marketing"},
+                            {"id": 6, "name": "Andreas", "department":"technology"},
+                            {"id": 7, "name": "Jack", "department":"sales"},
+                            {"id": 8, "name": "James", "department":"sales"},
+                            {"id": 9, "name": "Tom", "department":"sales"},
+                            {"id": 10, "name": "Rebeca", "department":"sales"}
+                          ],
+                          "totalItems": 20,
+                          "totalPages" 2,
+                          "currentPage": $input.params('page')
+                        }
+                        #elseif($input.params('page') == 2 and $input.params('limit') == 10)
+                        {
+                          "results": 
+                          [
+                            {"id": 11, "name": "Bruce", "department":"marketing"},
+                            {"id": 12, "name": "Banner", "department":"sales"},
+                            {"id": 13, "name": "Bond", "department":"sales"},
+                            {"id": 14, "name": "Sam", "department":"technology"},
+                            {"id": 15, "name": "Vincent", "department":"sales"},
+                            {"id": 16, "name": "Jules", "department":"technology"},
+                            {"id": 17, "name": "Wallace", "department":"sales"},
+                            {"id": 18, "name": "Buch", "department":"sales"},
+                            {"id": 19, "name": "Walter", "department":"technology"},
+                            {"id": 20, "name": "Smith", "department":"marketing"}  
+                          ],
+                          "totalItems": 20,
+                          "totalPages" 2,
+                          "currentPage": $input.params('page')
+                        }
+                        #elseif($input.params('page') == 1 and $input.params('limit') == 5)
+                        {
+                          "results":
+                          [
+                            {"id": 1, "name": "Wharley", "department":"technology"},
+                            {"id": 2, "name": "Juan", "department":"technology"},
+                            {"id": 3, "name": "Peter", "department":"sales"},
+                            {"id": 4, "name": "Rose", "department":"sales"},
+                            {"id": 5, "name": "Leo", "department":"marketing"}
+                          ],
+                          "totalItems": 20,
+                          "totalPages" 4,
+                          "currentPage": $input.params('page')
+                        }
+                        #elseif($input.params('page') == 2 and $input.params('limit') == 5)
+                        {
+                          "results":
+                          [
+                            {"id": 6, "name": "Andreas", "department":"technology"},
+                            {"id": 7, "name": "Jack", "department":"sales"},
+                            {"id": 8, "name": "James", "department":"sales"},
+                            {"id": 9, "name": "Tom", "department":"sales"},
+                            {"id": 10, "name": "Rebeca", "department":"sales"}
+                          ],
+                          "totalItems": 20,
+                          "totalPages" 4,
+                          "currentPage": $input.params('page')
+                        }
+                        #elseif($input.params('page') == 3 and $input.params('limit') == 5)
+                        {
+                          "results":
+                          [
+                            {"id": 11, "name": "Bruce", "department":"marketing"},
+                            {"id": 12, "name": "Banner", "department":"sales"},
+                            {"id": 13, "name": "Bond", "department":"sales"},
+                            {"id": 14, "name": "Sam", "department":"technology"},
+                            {"id": 15, "name": "Vincent", "department":"sales"}
+                          ],
+                          "totalItems": 20,
+                          "totalPages" 4,
+                          "currentPage": $input.params('page')
+                        }
+                        #elseif($input.params('page') == 4 and $input.params('limit') == 5)
+                        {
+                          "results":
+                          [
+                            {"id": 16, "name": "Jules", "department":"technology"},
+                            {"id": 17, "name": "Wallace", "department":"sales"},
+                            {"id": 18, "name": "Buch", "department":"sales"},
+                            {"id": 19, "name": "Walter", "department":"technology"},
+                            {"id": 20, "name": "Smith", "department":"marketing"}
+                          ],
+                          "totalItems": 20,
+                          "totalPages" 4,
+                          "currentPage": $input.params('page')
+                        }
+                        #end
                 requestParameters:
                   integration.request.querystring.page: method.request.querystring.page
-                  integration.request.querystring.department: method.request.querystring.department
+                  integration.request.querystring.limit: method.request.querystring.limit
                 passthroughBehavior: when_no_match
                 requestTemplates:
                   application/json: '{"statusCode": 200}'
@@ -195,9 +293,18 @@ Resources:
                 type: mock
         definitions:
           Employees:
-            type: array
-            items:
-              $ref: '#/definitions/Employee'
+            type: object
+            properties:
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Employee'
+              totalItems:
+                type: integer
+              totalPages:
+                type: integer
+              currentPage:
+                type: integer
           Empty:
             type: object
           NewEmployeeResponse:
