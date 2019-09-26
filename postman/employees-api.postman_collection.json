@@ -41,7 +41,19 @@
 			"name": "employees/clear-cache",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "awsv4",
+					"awsv4": [
+						{
+							"key": "secretKey",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "accessKey",
+							"value": "",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [
