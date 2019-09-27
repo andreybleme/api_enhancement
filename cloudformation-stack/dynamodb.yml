@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: AWS API Gateway for Employees API
+
+Resources:
+  DynamoDB:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - AttributeName: id
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema: 
+        - AttributeName: id
+          KeyType: HASH
+      TableName: employee
