@@ -1,0 +1,184 @@
+{
+    "employee": [
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "1"},
+                    "name": {"S": "Wharley"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "2"},
+                    "name": {"S": "Juan"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "3"},
+                    "name": {"S": "George"},
+                    "department": {"S": "sales"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "4"},
+                    "name": {"S": "Peter"},
+                    "department": {"S": "sales"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "5"},
+                    "name": {"S": "Ana"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "6"},
+                    "name": {"S": "Jose"},
+                    "department": {"S": "marketing"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "7"},
+                    "name": {"S": "Rebecca"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "8"},
+                    "name": {"S": "Mary"},
+                    "department": {"S": "marketing"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "9"},
+                    "name": {"S": "Andreas"},
+                    "department": {"S": "sales"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "10"},
+                    "name": {"S": "Lucas"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "11"},
+                    "name": {"S": "Parker"},
+                    "department": {"S": "sales"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "12"},
+                    "name": {"S": "Jonah"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "13"},
+                    "name": {"S": "Robert"},
+                    "department": {"S": "sales"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "14"},
+                    "name": {"S": "Ana"},
+                    "department": {"S": "marketing"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "15"},
+                    "name": {"S": "Adrian"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "16"},
+                    "name": {"S": "Petterson"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "17"},
+                    "name": {"S": "John"},
+                    "department": {"S": "marketing"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "18"},
+                    "name": {"S": "Roger"},
+                    "department": {"S": "sales"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "19"},
+                    "name": {"S": "Jessica"},
+                    "department": {"S": "technology"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "id": {"S": "20"},
+                    "name": {"S": "Ryan"},
+                    "department": {"S": "sales"}
+                }
+            }
+        }
+    ]
+}
