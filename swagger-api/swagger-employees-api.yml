@@ -35,6 +35,41 @@ paths:
         requestTemplates:
           application/json: '{"statusCode": 200}'
         type: mock
+  /employees/count:
+    get:
+      tags:
+        - employees
+      operationId: CountItems
+      summary: Count all existing employees
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/EmployeesCount'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+              description: URI that may access the resource
+      x-amazon-apigateway-integration:
+        credentials: { "Fn::GetAtt" : ["IAMDynamoDBRole", "Arn"] }
+        uri: "arn:aws:apigateway:us-east-1:dynamodb:action/DescribeTable"
+        responses:
+          default:
+            statusCode: 200
+            responseTemplates:
+              application/json: >-
+                #set($inputRoot = $input.path('$'))
+                {
+                  "totalItemsCount": "$inputRoot.Table.ItemCount"
+                }
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: >-
+            {
+              "TableName": "employee"
+            }
+        httpMethod: "POST"
+        type: aws
   /employees:
     get:
       tags:
@@ -43,11 +78,11 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: page
+        - name: startsFrom
           in: query
-          description: Page number of results to return.
+          description: The key ID where data retrieval should start from (offset)
           required: false
-          type: integer
+          type: string
         - name: limit
           in: query
           description: Number of records to be returned in a single page.
@@ -63,113 +98,47 @@ paths:
               type: string
               description: URI that may access the resource
       x-amazon-apigateway-integration:
+        credentials: { "Fn::GetAtt" : ["IAMDynamoDBRole", "Arn"] }
+        uri: "arn:aws:apigateway:us-east-1:dynamodb:action/Scan"
         responses:
           default:
             statusCode: 200
             responseTemplates:
               application/json: >-
-                #if($input.params('page') == 1 and $input.params('limit') == 10)
+                #set($inputRoot = $input.path('$'))
                 {
-                  "results": 
-                  [
-                    {"id": 1, "name": "Wharley", "department":"technology"},
-                    {"id": 2, "name": "Juan", "department":"technology"},
-                    {"id": 3, "name": "Peter", "department":"sales"},
-                    {"id": 4, "name": "Rose", "department":"sales"},
-                    {"id": 5, "name": "Leo", "department":"marketing"},
-                    {"id": 6, "name": "Andreas", "department":"technology"},
-                    {"id": 7, "name": "Jack", "department":"sales"},
-                    {"id": 8, "name": "James", "department":"sales"},
-                    {"id": 9, "name": "Tom", "department":"sales"},
-                    {"id": 10, "name": "Rebeca", "department":"sales"}
-                  ],
-                  "totalItems": 20,
-                  "totalPages" 2,
-                  "currentPage": $input.params('page')
+                    "results": [
+                        #foreach($elem in $inputRoot.Items)
+                        {
+                          "id": "$elem.id.S",
+                          "name": "$elem.name.S",
+                          "department": "$elem.department.S"
+                        }#if($foreach.hasNext),#end
+                        #end
+                    ]
+                    #if($inputRoot.LastEvaluatedKey)
+                    ,"lastEvaluatedKey": "$inputRoot.LastEvaluatedKey"
+                    #end
                 }
-                #elseif($input.params('page') == 2 and $input.params('limit') == 10)
-                {
-                  "results": 
-                  [
-                    {"id": 11, "name": "Bruce", "department":"marketing"},
-                    {"id": 12, "name": "Banner", "department":"sales"},
-                    {"id": 13, "name": "Bond", "department":"sales"},
-                    {"id": 14, "name": "Sam", "department":"technology"},
-                    {"id": 15, "name": "Vincent", "department":"sales"},
-                    {"id": 16, "name": "Jules", "department":"technology"},
-                    {"id": 17, "name": "Wallace", "department":"sales"},
-                    {"id": 18, "name": "Buch", "department":"sales"},
-                    {"id": 19, "name": "Walter", "department":"technology"},
-                    {"id": 20, "name": "Smith", "department":"marketing"}  
-                  ],
-                  "totalItems": 20,
-                  "totalPages" 2,
-                  "currentPage": $input.params('page')
-                }
-                #elseif($input.params('page') == 1 and $input.params('limit') == 5)
-                {
-                  "results":
-                  [
-                    {"id": 1, "name": "Wharley", "department":"technology"},
-                    {"id": 2, "name": "Juan", "department":"technology"},
-                    {"id": 3, "name": "Peter", "department":"sales"},
-                    {"id": 4, "name": "Rose", "department":"sales"},
-                    {"id": 5, "name": "Leo", "department":"marketing"}
-                  ],
-                  "totalItems": 20,
-                  "totalPages" 4,
-                  "currentPage": $input.params('page')
-                }
-                #elseif($input.params('page') == 2 and $input.params('limit') == 5)
-                {
-                  "results":
-                  [
-                    {"id": 6, "name": "Andreas", "department":"technology"},
-                    {"id": 7, "name": "Jack", "department":"sales"},
-                    {"id": 8, "name": "James", "department":"sales"},
-                    {"id": 9, "name": "Tom", "department":"sales"},
-                    {"id": 10, "name": "Rebeca", "department":"sales"}
-                  ],
-                  "totalItems": 20,
-                  "totalPages" 4,
-                  "currentPage": $input.params('page')
-                }
-                #elseif($input.params('page') == 3 and $input.params('limit') == 5)
-                {
-                  "results":
-                  [
-                    {"id": 11, "name": "Bruce", "department":"marketing"},
-                    {"id": 12, "name": "Banner", "department":"sales"},
-                    {"id": 13, "name": "Bond", "department":"sales"},
-                    {"id": 14, "name": "Sam", "department":"technology"},
-                    {"id": 15, "name": "Vincent", "department":"sales"}
-                  ],
-                  "totalItems": 20,
-                  "totalPages" 4,
-                  "currentPage": $input.params('page')
-                }
-                #elseif($input.params('page') == 4 and $input.params('limit') == 5)
-                {
-                  "results":
-                  [
-                    {"id": 16, "name": "Jules", "department":"technology"},
-                    {"id": 17, "name": "Wallace", "department":"sales"},
-                    {"id": 18, "name": "Buch", "department":"sales"},
-                    {"id": 19, "name": "Walter", "department":"technology"},
-                    {"id": 20, "name": "Smith", "department":"marketing"}
-                  ],
-                  "totalItems": 20,
-                  "totalPages" 4,
-                  "currentPage": $input.params('page')
-                }
-                #end
         requestParameters:
-          integration.request.querystring.page: method.request.querystring.page
           integration.request.querystring.limit: method.request.querystring.limit
+          integration.request.querystring.startsFrom: method.request.querystring.startsFrom
         passthroughBehavior: when_no_match
         requestTemplates:
-          application/json: '{"statusCode": 200}'
-        type: mock
+          application/json: >-
+            {
+              "TableName": "employee",
+              #if($input.params('limit') != "")
+              "Limit": $input.params('limit')
+              #else
+              "Limit": 10
+              #end
+              #if($input.params('startsFrom') != "")
+              ,"ExclusiveStartKey": $input.params('startsFrom')
+              #end
+            }
+        httpMethod: "POST"
+        type: aws
     post:
       tags:
         - employees
@@ -286,12 +255,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Employee'
-      totalItems:
-        type: integer
-      totalPages:
-        type: integer
-      currentPage:
-        type: integer
   Empty:
     type: object
   NewEmployeeResponse:
@@ -308,6 +271,11 @@ definitions:
         type: string
       name:
         type: string
+  EmployeesCount:
+    type: object
+    properties:
+      totalItemsCount:
+        type: integer
   NewEmployee:
     type: object
     properties:

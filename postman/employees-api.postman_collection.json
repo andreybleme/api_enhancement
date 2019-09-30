@@ -10,10 +10,15 @@
 			"name": "employees",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
 				"body": {},
 				"url": {
-					"raw": "{{host}}/employees?page=1&limit=10",
+					"raw": "{{host}}/employees?limit=5&startsFrom={\"id\":{\"S\":\"8\"}}",
 					"host": [
 						"{{host}}"
 					],
@@ -22,13 +27,13 @@
 					],
 					"query": [
 						{
-							"key": "page",
-							"value": "1",
+							"key": "limit",
+							"value": "5",
 							"equals": true
 						},
 						{
-							"key": "limit",
-							"value": "10",
+							"key": "startsFrom",
+							"value": "{\"id\":{\"S\":\"8\"}}",
 							"equals": true
 						}
 					]
@@ -41,19 +46,7 @@
 			"name": "employees/clear-cache",
 			"request": {
 				"auth": {
-					"type": "awsv4",
-					"awsv4": [
-						{
-							"key": "secretKey",
-							"value": "",
-							"type": "string"
-						},
-						{
-							"key": "accessKey",
-							"value": "",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [
@@ -72,6 +65,35 @@
 					"path": [
 						"employees",
 						"clear-cache"
+					]
+				},
+				"description": "Get all employees"
+			},
+			"response": []
+		},
+		{
+			"name": "employees/count",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/employees/count",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"employees",
+						"count"
 					]
 				},
 				"description": "Get all employees"
