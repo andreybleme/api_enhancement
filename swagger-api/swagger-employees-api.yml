@@ -47,15 +47,22 @@ paths:
           schema:
             $ref: '#/definitions/EmployeesCount'
           headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
             Access-Control-Allow-Origin:
-              type: string
-              description: URI that may access the resource
+              type: "string"
       x-amazon-apigateway-integration:
         credentials: { "Fn::GetAtt" : ["IAMDynamoDBRole", "Arn"] }
         uri: "arn:aws:apigateway:us-east-1:dynamodb:action/DescribeTable"
         responses:
           default:
             statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods : "'*'"
+              method.response.header.Access-Control-Allow-Origin : "'*'"
             responseTemplates:
               application/json: >-
                 #set($inputRoot = $input.path('$'))
@@ -94,15 +101,22 @@ paths:
           schema:
             $ref: '#/definitions/Employees'
           headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
             Access-Control-Allow-Origin:
-              type: string
-              description: URI that may access the resource
+              type: "string"
       x-amazon-apigateway-integration:
         credentials: { "Fn::GetAtt" : ["IAMDynamoDBRole", "Arn"] }
         uri: "arn:aws:apigateway:us-east-1:dynamodb:action/Scan"
         responses:
           default:
             statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods : "'*'"
+              method.response.header.Access-Control-Allow-Origin : "'*'"
             responseTemplates:
               application/json: >-
                 #set($inputRoot = $input.path('$'))
