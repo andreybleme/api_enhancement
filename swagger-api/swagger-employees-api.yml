@@ -89,7 +89,7 @@ paths:
           in: query
           description: The key ID where data retrieval should start from (offset)
           required: false
-          type: string
+          type: integer
         - name: limit
           in: query
           description: Number of records to be returned in a single page.
@@ -131,7 +131,7 @@ paths:
                         #end
                     ]
                     #if($inputRoot.LastEvaluatedKey)
-                    ,"lastEvaluatedKey": "$inputRoot.LastEvaluatedKey"
+                    ,"lastEvaluatedKey": $inputRoot.LastEvaluatedKey.id.S
                     #end
                 }
         requestParameters:
@@ -148,7 +148,7 @@ paths:
               "Limit": 10
               #end
               #if($input.params('startsFrom') != "")
-              ,"ExclusiveStartKey": $input.params('startsFrom')
+              ,"ExclusiveStartKey": {"id":{"S":"$input.params('startsFrom')"}}
               #end
             }
         httpMethod: "POST"
