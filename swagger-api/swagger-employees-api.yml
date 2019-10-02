@@ -124,7 +124,7 @@ paths:
                     "results": [
                         #foreach($elem in $inputRoot.Items)
                         {
-                          "id": "$elem.id.S",
+                          "id": $elem.id.N,
                           "name": "$elem.name.S",
                           "department": "$elem.department.S"
                         }#if($foreach.hasNext),#end
@@ -148,7 +148,7 @@ paths:
               "Limit": 10
               #end
               #if($input.params('startsFrom') != "")
-              ,"ExclusiveStartKey": {"id":{"S":"$input.params('startsFrom')"}}
+              ,"ExclusiveStartKey": {"id":{"N":"$input.params('startsFrom')"}}
               #end
             }
         httpMethod: "POST"

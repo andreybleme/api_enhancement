@@ -3,7 +3,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "1"},
+                    "id": {"N": "1"},
                     "name": {"S": "Wharley"},
                     "department": {"S": "technology"}
                 }
@@ -12,7 +12,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "2"},
+                    "id": {"N": "2"},
                     "name": {"S": "Juan"},
                     "department": {"S": "technology"}
                 }
@@ -21,7 +21,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "3"},
+                    "id": {"N": "3"},
                     "name": {"S": "George"},
                     "department": {"S": "sales"}
                 }
@@ -30,7 +30,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "4"},
+                    "id": {"N": "4"},
                     "name": {"S": "Peter"},
                     "department": {"S": "sales"}
                 }
@@ -39,7 +39,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "5"},
+                    "id": {"N": "5"},
                     "name": {"S": "Ana"},
                     "department": {"S": "technology"}
                 }
@@ -48,7 +48,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "6"},
+                    "id": {"N": "6"},
                     "name": {"S": "Jose"},
                     "department": {"S": "marketing"}
                 }
@@ -57,7 +57,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "7"},
+                    "id": {"N": "7"},
                     "name": {"S": "Rebecca"},
                     "department": {"S": "technology"}
                 }
@@ -66,7 +66,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "8"},
+                    "id": {"N": "8"},
                     "name": {"S": "Mary"},
                     "department": {"S": "marketing"}
                 }
@@ -75,7 +75,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "9"},
+                    "id": {"N": "9"},
                     "name": {"S": "Andreas"},
                     "department": {"S": "sales"}
                 }
@@ -84,7 +84,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "10"},
+                    "id": {"N": "10"},
                     "name": {"S": "Lucas"},
                     "department": {"S": "technology"}
                 }
@@ -93,7 +93,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "11"},
+                    "id": {"N": "11"},
                     "name": {"S": "Parker"},
                     "department": {"S": "sales"}
                 }
@@ -102,7 +102,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "12"},
+                    "id": {"N": "12"},
                     "name": {"S": "Jonah"},
                     "department": {"S": "technology"}
                 }
@@ -111,7 +111,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "13"},
+                    "id": {"N": "13"},
                     "name": {"S": "Robert"},
                     "department": {"S": "sales"}
                 }
@@ -120,7 +120,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "14"},
+                    "id": {"N": "14"},
                     "name": {"S": "Ana"},
                     "department": {"S": "marketing"}
                 }
@@ -129,7 +129,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "15"},
+                    "id": {"N": "15"},
                     "name": {"S": "Adrian"},
                     "department": {"S": "technology"}
                 }
@@ -138,7 +138,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "16"},
+                    "id": {"N": "16"},
                     "name": {"S": "Petterson"},
                     "department": {"S": "technology"}
                 }
@@ -147,7 +147,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "17"},
+                    "id": {"N": "17"},
                     "name": {"S": "John"},
                     "department": {"S": "marketing"}
                 }
@@ -156,7 +156,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "18"},
+                    "id": {"N": "18"},
                     "name": {"S": "Roger"},
                     "department": {"S": "sales"}
                 }
@@ -165,7 +165,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "19"},
+                    "id": {"N": "19"},
                     "name": {"S": "Jessica"},
                     "department": {"S": "technology"}
                 }
@@ -174,7 +174,7 @@
         {
             "PutRequest": {
                 "Item": {
-                    "id": {"S": "20"},
+                    "id": {"N": "20"},
                     "name": {"S": "Ryan"},
                     "department": {"S": "sales"}
                 }
