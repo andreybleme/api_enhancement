@@ -80,7 +80,7 @@ Resources:
                       application/json: >-
                         #set($inputRoot = $input.path('$'))
                         {
-                          "totalItemsCount": "$inputRoot.Table.ItemCount"
+                          "totalItemsCount": $inputRoot.Table.ItemCount
                         }
                 passthroughBehavior: when_no_match
                 requestTemplates:
