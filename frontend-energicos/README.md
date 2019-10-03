@@ -1,4 +1,4 @@
-# frontend
+# frontend-energicos
 
 ## Project setup
 ```

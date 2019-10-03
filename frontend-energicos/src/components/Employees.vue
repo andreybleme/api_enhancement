@@ -83,6 +83,7 @@ export default {
           })
           .then(res => {
             const total = res.data.totalItemsCount
+            console.log('Total --> ', total)
 
             axios.get('/employees', {
               params: {
@@ -95,6 +96,7 @@ export default {
               })
               .then(res => {
                 let items = res.data.results
+                console.log('Items --> ', items)
                 this.lastEvaluatedKey = res.data.lastEvaluatedKey
                 this.pageAndFirstItemKeys.set(page, items[0].id)
                 
