@@ -88,7 +88,7 @@ Frontend should not request for GET `/employees/count` every time (depends on th
 
 > Depending on how often the DynamoDB table gets updated, we would not need to perform an extra count request everytime a new page is loaded. We could store this count value in a vuex state for example and get it from the state instead of getting from API all the time.
 
-Invalidate cache requires AWS Signature Authentication and it is not working
+Invalidate cache requires AWS Signature Authentication and it is properly securely not working
 
 > The endpoint POST `/employees/clear-cache` should have an easier way than AWS Signature Authentication to allow cache invalidation. 
 I have not validated if sending the header `Cache-Control: max-age=0` with this Authentication schema is really destroying the cache because I didn't have time to map this headers on the swaggerfile.
