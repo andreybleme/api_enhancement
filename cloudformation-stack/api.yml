@@ -433,12 +433,26 @@ Resources:
         CacheTtlInSeconds: 300
         MetricsEnabled: true
       StageName: dev
-  # IAM Clear Cache Policy Group
-  IAMClearCachePolicyGroup:
-    Type: AWS::IAM::Group
-    Properties:
-      GroupName: api-gateway-employees-api
-      Policies:
+  # IAM Invalidate Cache Role
+  IAMInvalidateCacheRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument: {
+         "Statement":[
+            {
+               "Effect":"Allow",
+               "Principal":{
+                  "Service":[
+                    "apigateway.amazonaws.com"
+                  ]
+               },
+               "Action":[
+                  "sts:AssumeRole"
+               ]
+            }
+         ]
+      }
+      Policies: 
         - PolicyDocument: {
             "Version": "2012-10-17",
             "Statement": [
@@ -454,6 +468,7 @@ Resources:
             ]
           }
           PolicyName: apigateway-clear-cache
+      RoleName: apigateway-invalidate-cache
   # IAM Read DynamoDB Role
   IAMDynamoDBRole:
     Type: AWS::IAM::Role
