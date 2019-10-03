@@ -53,6 +53,20 @@ Open the file `src/main.js` and change the variable `baseURL` to point to a vali
 
 `npm run serve`
 
+## Highlights of the implementation
+
+**1.** The built-in API Gateway cache solution drastically improves the reading cost of DynamoDB records (both financial costs and saving computational resources), since it prevents requests of reaching the database as you can see in [this cloudwatch panel](https://github.com/andreybleme/api_enhancement/blob/master/screenshots/energicos-cache-without-invalidation.png).
+
+**2.** I have created a DynamoDB Secondary Global Index to make Query operations faster and more flexible as well.
+
+**3.** All API endpoints, except for the GET `/employees`, are of the type `mock`, so they do not perform any operatinos in DynamoDB, it just retrieves dummy data.
+
+**4.** I am using the [vuetify data-table component](https://vuetifyjs.com/pt-BR/components/data-tables) with server side pagination.
+
+**5.** There is a ready [Elasticache Redis cloudformation file here](https://github.com/andreybleme/api_enhancement/commit/7ed95be0a2a2ef51221c6b8c146dd8aed1174ecc#diff-84778dc6450b7f38d4f9edaf02023657) in case we want to have a more fine grained control over caching, pagination and try caching strategies such as lazy-loading and write-through.
+I have created it in the begining of the challenge, before we make clear that we must use a custom integration with DynamoDB.
+
+
 
 ## Improvements to be done
 
@@ -81,18 +95,4 @@ I have not validated if sending the header `Cache-Control: max-age=0` with this 
 Anyway, there is a button in the console that flushes the cache as we can see in this documentation page: [https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html#flush-api-caching](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html#flush-api-caching)
 
 Unfortunately I didn't have time at the end for these above items.
-
-
-## Highlights of the implementation
-
-**1.** The built-in API Gateway cache solution drastically improves the reading cost of DynamoDB records (both financial costs and saving computational resources), since it prevents requests of reaching the database as you can see in [this cloudwatch panel](https://github.com/andreybleme/api_enhancement/blob/master/screenshots/energicos-cache-without-invalidation.png).
-
-**2.** I have created a DynamoDB Secondary Global Index to make Query operations faster and more flexible as well.
-
-**3.** All API endpoints, except for the GET `/employees`, are of the type `mock`, so they do not perform any operatinos in DynamoDB, it just retrieves dummy data.
-
-**4.** I am using the [vuetify data-table component](https://vuetifyjs.com/pt-BR/components/data-tables) with server side pagination.
-
-**5.** There is a ready [Elasticache Redis cloudformation file here](https://github.com/andreybleme/api_enhancement/commit/7ed95be0a2a2ef51221c6b8c146dd8aed1174ecc#diff-84778dc6450b7f38d4f9edaf02023657) in case we want to have a more fine grained control over caching, pagination and try caching strategies such as lazy-loading and write-through.
-I have created it in the begining of the challenge, before we make clear that we must use a custom integration with DynamoDB.
 
