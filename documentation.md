@@ -3,6 +3,7 @@
 [> Check here the screenshots of the working solution <](https://github.com/andreybleme/api_enhancement/tree/master/screenshots) 
 
 The `employee-api` uses the built in API Gateway cache solution: [https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html).
+
 It contains a GET `/employees` endpoint that has a custom integration with DynamoDB to retrieve records and cache results for 300 seconds (default TTL).
 
 ## Setup instructions
