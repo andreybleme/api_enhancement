@@ -55,7 +55,7 @@ paths:
               type: "string"
       x-amazon-apigateway-integration:
         credentials: { "Fn::GetAtt" : ["IAMDynamoDBRole", "Arn"] }
-        uri: "arn:aws:apigateway:us-east-1:dynamodb:action/DescribeTable"
+        uri: "arn:aws:apigateway:us-east-1:dynamodb:action/Query"
         responses:
           default:
             statusCode: 200
@@ -67,13 +67,20 @@ paths:
               application/json: >-
                 #set($inputRoot = $input.path('$'))
                 {
-                  "totalItemsCount": $inputRoot.Table.ItemCount
+                  "totalItemsCount": $inputRoot.Count
                 }
         passthroughBehavior: when_no_match
         requestTemplates:
           application/json: >-
             {
-              "TableName": "employee"
+              "TableName": "employee",
+              "Select": "COUNT",
+              "KeyConditionExpression": "department = :department",
+              "ExpressionAttributeValues": {
+                ":department": {
+                  "S": "technology" 
+                }
+              }
             }
         httpMethod: "POST"
         type: aws
@@ -109,7 +116,7 @@ paths:
               type: "string"
       x-amazon-apigateway-integration:
         credentials: { "Fn::GetAtt" : ["IAMDynamoDBRole", "Arn"] }
-        uri: "arn:aws:apigateway:us-east-1:dynamodb:action/Scan"
+        uri: "arn:aws:apigateway:us-east-1:dynamodb:action/Query"
         responses:
           default:
             statusCode: 200
@@ -131,7 +138,7 @@ paths:
                         #end
                     ]
                     #if($inputRoot.LastEvaluatedKey)
-                    ,"lastEvaluatedKey": $inputRoot.LastEvaluatedKey.id.S
+                    ,"lastEvaluatedKey": $inputRoot.LastEvaluatedKey.id.N
                     #end
                 }
         requestParameters:
@@ -142,13 +149,20 @@ paths:
           application/json: >-
             {
               "TableName": "employee",
+              "KeyConditionExpression": "department = :department",
+              "IndexName": "gsi_pk",
+              "ExpressionAttributeValues": {
+                ":department": {
+                  "S": "technology" 
+                }
+              },
               #if($input.params('limit') != "")
               "Limit": $input.params('limit')
               #else
               "Limit": 10
               #end
               #if($input.params('startsFrom') != "")
-              ,"ExclusiveStartKey": {"id":{"N":"$input.params('startsFrom')"}}
+              ,"ExclusiveStartKey": {"id":{"N":"$input.params('startsFrom')"}, "department":{"S": "technology"}}
               #end
             }
         httpMethod: "POST"

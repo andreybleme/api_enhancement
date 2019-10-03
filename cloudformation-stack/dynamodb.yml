@@ -7,10 +7,23 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties: 
       AttributeDefinitions: 
+        - AttributeName: department
+          AttributeType: S
         - AttributeName: id
           AttributeType: N
       BillingMode: PAY_PER_REQUEST
       KeySchema: 
-        - AttributeName: id
+        - AttributeName: department
           KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
       TableName: employee
+      GlobalSecondaryIndexes: 
+        - IndexName: gsi_pk
+          KeySchema: 
+            - AttributeName: department
+              KeyType: HASH
+            - AttributeName: id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
