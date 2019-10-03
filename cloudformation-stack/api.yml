@@ -150,7 +150,7 @@ Resources:
                                 }#if($foreach.hasNext),#end
                                 #end
                             ]
-                            #if($inputRoot.LastEvaluatedKey)
+                            #if($!{inputRoot.LastEvaluatedKey.id.N} != "")
                             ,"lastEvaluatedKey": $inputRoot.LastEvaluatedKey.id.N
                             #end
                         }

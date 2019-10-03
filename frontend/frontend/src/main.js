@@ -7,7 +7,7 @@ Vue.config.productionTip = false
 
 
 const instance = axios.create({
-  baseURL: "https://7rbz97mv14.execute-api.us-east-1.amazonaws.com/dev"
+  baseURL: "https://i5oyneloz2.execute-api.us-east-1.amazonaws.com/dev"
 })
 
 new Vue({

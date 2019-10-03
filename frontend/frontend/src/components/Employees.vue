@@ -5,6 +5,10 @@
       wrap
     >
       <v-flex xs12>
+        <h1 align="left">Employees Report</h1>
+        
+        <v-divider></v-divider><br/>
+        
         <v-data-table
           :headers="headers"
           :items="employees"
@@ -13,8 +17,12 @@
           :loading="loading"
           class="elevation-1"
         ></v-data-table>
+        
+        <v-footer>
+          <div class="flex-grow-1"></div>
+          <div>&copy; Lucas Andrey Bleme {{ new Date().getFullYear() }}</div>
+        </v-footer>
       </v-flex>
-
     </v-layout>
   </v-container>
 </template>
@@ -29,15 +37,12 @@ export default {
       loading: true,
       options: {},
       lastEvaluatedKey: '',
+      lastPage: 1,
+      pageAndFirstItemKeys: new Map(),
       headers: [
-        {
-          text: 'Id',
-          align: 'left',
-          sortable: false,
-          value: 'id',
-        },
-        { text: 'Name', value: 'name' },
-        { text: 'Department', value: 'department' },
+        { text: 'Id', align: 'left', sortable: false, value: 'id' },
+        { text: 'Name', sortable: false, value: 'name' },
+        { text: 'Department', sortable: false, value: 'department' },
       ],
     }
   },
@@ -66,40 +71,39 @@ export default {
 
       return new Promise((resolve, reject) => {
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
-
-        axios.get('/employees', {
-          params: {
-            limit: itemsPerPage,
-            startsFrom: this.lastEvaluatedKey
-          },
-        })
-        .catch(error => {
-          console.log('Error getting employees from API: ', error)
-        })
-        .then(res => {
-          let items = res.data.results
-          this.lastEvaluatedKey = res.data.lastEvaluatedKey
-          
-          axios.get('/employees/count')
+        
+        if (page < this.lastPage) {
+          this.lastEvaluatedKey = this.pageAndFirstItemKeys.get(page)
+        }
+        this.lastPage = page
+        
+        axios.get('/employees/count')
           .catch(error => {
-            console.log('Error counting employees from API: ', error)
+            console.log('Error getting employees count from API: ', error)
           })
           .then(res => {
             const total = res.data.totalItemsCount
 
-            if (itemsPerPage > 0) {
-              items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-            }
-
-            setTimeout(() => {
-              this.loading = false
-              resolve({
-                items,
-                total,
+            axios.get('/employees', {
+              params: {
+                limit: (itemsPerPage == -1) ? total : itemsPerPage,
+                startsFrom: (page !== 1) ? this.lastEvaluatedKey : ''
+              },
+            })
+              .catch(error => {
+                console.log('Error getting employees from API: ', error)
               })
-            }, 1000)
+              .then(res => {
+                let items = res.data.results
+                this.lastEvaluatedKey = res.data.lastEvaluatedKey
+                this.pageAndFirstItemKeys.set(page, items[0].id)
+                
+                setTimeout(() => {
+                  this.loading = false
+                  resolve({ items, total })
+                }, 1000)
+              })
           })
-        })
       })
     },
   },
