@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <v-btn
         text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        href="https://github.com/andreybleme/api_enhancement/blob/master/documentation.md"
         target="_blank"
       >
         <span class="mr-2">How it works?</span>
